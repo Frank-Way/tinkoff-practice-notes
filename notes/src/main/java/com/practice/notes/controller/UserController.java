@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
+//import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 public class UserController {
@@ -15,6 +16,7 @@ public class UserController {
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
 
     @GetMapping("/users")
     public List<User> getUsers() {
