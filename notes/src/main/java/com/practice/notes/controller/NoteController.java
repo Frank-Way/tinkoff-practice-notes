@@ -55,7 +55,6 @@ public class NoteController {
                 .map(note -> {
                     note.setName(noteRequest.getName());
                     note.setBody(noteRequest.getBody());
-                    //note.setUpdatedAt(noteRequest.getUpdatedAt());
                     note.setStatus(noteRequest.getStatus());
                     return noteRepository.save(note);
                 }).orElseThrow(() -> new ResourceNotFoundException("Note not found with id " + noteId));
@@ -67,7 +66,6 @@ public class NoteController {
         if(!userRepository.existsById(userId)) {
             throw new ResourceNotFoundException("User not found with id " + userId);
         }
-
         return noteRepository.findById(noteId)
                 .map(note -> {
                     noteRepository.delete(note);

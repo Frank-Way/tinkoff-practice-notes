@@ -27,7 +27,6 @@ public class UserController {
                 () -> new ResourceNotFoundException("User not found with id " + userId));
     }
 
-
     @PostMapping("/users")
     public User createUser(@Valid @RequestBody User user) {
         return userRepository.save(user);
