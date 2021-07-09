@@ -51,6 +51,8 @@ public class Note {
 
     // Getters and Setters (Omitted for brevity)
 
+    public long getId() { return this.id; }
+
     public void setUser(User value) { this.user = value; }
 
     public User getUser() { return this.user; }

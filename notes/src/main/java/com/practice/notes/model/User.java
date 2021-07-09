@@ -20,6 +20,9 @@ public class User {
     private String password;
 
     // Getters and Setters (Omitted for brevity)
+
+    public long getId() { return  this.id; }
+
     public void setLogin(String value) { this.login = value; }
 
     public String getLogin() { return this.login; }
