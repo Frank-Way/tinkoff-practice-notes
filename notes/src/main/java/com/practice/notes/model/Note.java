@@ -7,8 +7,10 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import java.util.Date;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -40,15 +42,25 @@ public class Note {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created", nullable = false, updatable = false)
     @CreatedDate
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated", nullable = false)
     @LastModifiedDate
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "status", nullable = false)
     private boolean status;
+
+    public Note(long id, String name, String body, LocalDateTime s, LocalDateTime s1, long userId, boolean status) {
+        this.id = id;
+        this.name = name;
+        this.body = body;
+        this.createdAt = s;
+        this.updatedAt = s1;
+        this.status = status;
+    }
+
 
     // Getters and Setters (Omitted for brevity)
 
@@ -64,13 +76,13 @@ public class Note {
 
     public String getBody() { return this.body; }
 
-    public void setCreatedAt(Date value) { this.createdAt = value; }
+    public void setCreatedAt(LocalDateTime value) { this.createdAt = value; }
 
-    public Date getCreatedAt() { return this.createdAt; }
+    public LocalDateTime getCreatedAt() { return this.createdAt; }
 
-    public void setUpdatedAt(Date value) { this.updatedAt = value; }
+    public void setUpdatedAt(LocalDateTime value) { this.updatedAt = value; }
 
-    public Date getUpdatedAt() { return this.updatedAt; }
+    public LocalDateTime getUpdatedAt() { return this.updatedAt; }
 
     public void setStatus(boolean value) { this.status = value; }
 

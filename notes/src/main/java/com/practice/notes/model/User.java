@@ -19,6 +19,12 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    public User(long i, String login, String password) {
+        this.id = i;
+        this.login = login;
+        this.password = password;
+    }
+
     // Getters and Setters (Omitted for brevity)
     public void setLogin(String value) { this.login = value; }
 
