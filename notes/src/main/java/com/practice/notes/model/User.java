@@ -25,7 +25,16 @@ public class User {
         this.password = password;
     }
 
+    public User(String log, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
     // Getters and Setters (Omitted for brevity)
+    public void setId(long value) { this.id = value; }
+
+    public Long getId() { return this.id; }
+
     public void setLogin(String value) { this.login = value; }
 
     public String getLogin() { return this.login; }

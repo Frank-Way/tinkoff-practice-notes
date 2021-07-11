@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest(NoteController.class)
-class NoteControllerTest {
+class NoteControllerMockMvcUnitTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
