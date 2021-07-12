@@ -21,6 +21,7 @@ public class NoteController {
 
     private final UserRepository userRepository;
     private final NoteRepository noteRepository;
+
     public NoteController(UserRepository userRepository, NoteRepository noteRepository) {
         this.userRepository = userRepository;
         this.noteRepository = noteRepository;

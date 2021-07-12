@@ -3,6 +3,7 @@ package com.practice.notes.controller;
 import com.practice.notes.exception.ResourceNotFoundException;
 import com.practice.notes.model.User;
 import com.practice.notes.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -14,10 +15,8 @@ import io.swagger.v3.oas.annotations.media.*;
 @RestController
 public class UserController {
 
-    private final UserRepository userRepository;
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    private UserRepository userRepository;
 
     @Operation(summary = "Get a user", description = "Get a user by his login")
     @ApiResponses(value = {
@@ -62,8 +61,6 @@ public class UserController {
                 () -> new ResourceNotFoundException("User not found with id " + userId));
     }
 
-
-
     @Operation(summary = "Add a user", description = "Add a new user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User added",
@@ -87,7 +84,7 @@ public class UserController {
                     content = @Content) })
     @PutMapping("/users/{userId}")
     public User updateUser(@Parameter(description = "Id of user to be updated") @PathVariable Long userId,
-                                   @Valid @RequestBody User userRequest) {
+                           @Valid @RequestBody User userRequest) {
         return userRepository.findById(userId)
                 .map(user -> {
                     user.setLogin(userRequest.getLogin());

@@ -7,7 +7,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import java.util.Date;
+import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -36,44 +36,93 @@ public class Note {
     @Column(name = "body", nullable = false)
     private String body;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    //@Temporal(TemporalType.DATE)
     @Column(name = "created", nullable = false, updatable = false)
     @CreatedDate
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    //@Temporal(TemporalType.DATE)
     @Column(name = "updated", nullable = false)
     @LastModifiedDate
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "status", nullable = false)
     private boolean status;
 
+    public Note () {}
+
+    public Note(Long id, String name, String body, LocalDateTime s, LocalDateTime s1, long userId, boolean status) {
+        this.id = id;
+        this.name = name;
+        this.body = body;
+        this.createdAt = s;
+        this.updatedAt = s1;
+        this.status = status;
+    }
+
+    public Note(String name, String body, LocalDateTime s, LocalDateTime s1, long userId, boolean status) {
+        this.name = name;
+        this.body = body;
+        this.createdAt = s;
+        this.updatedAt = s1;
+        this.status = status;
+    }
+
+
     // Getters and Setters (Omitted for brevity)
 
-    public long getId() { return this.id; }
+    public void setId(long value) {
+        this.id = value;
+    }
 
-    public void setUser(User value) { this.user = value; }
+    public Long getId() { return this.id; }
 
-    public User getUser() { return this.user; }
+    public void setUser(User value) {
+        this.user = value;
+    }
 
-    public  void setName(String value) { this.name = value; }
+    public User getUser() {
+        return this.user;
+    }
 
-    public String getName() { return this.name; }
+    public void setName(String value) {
+        this.name = value;
+    }
 
-    public void setBody(String value) { this.body = value; }
+    public String getName() {
+        return this.name;
+    }
 
-    public String getBody() { return this.body; }
+    public void setBody(String value) {
+        this.body = value;
+    }
 
-    public void setCreatedAt(Date value) { this.createdAt = value; }
+    public String getBody() {
+        return this.body;
+    }
 
-    public Date getCreatedAt() { return this.createdAt; }
+    public void setCreatedAt(LocalDateTime value) {
+        this.createdAt = value;
+    }
 
-    public void setUpdatedAt(Date value) { this.updatedAt = value; }
+    public LocalDateTime getCreatedAt() {
+        return this.createdAt;
+    }
 
-    public Date getUpdatedAt() { return this.updatedAt; }
+    public void setUpdatedAt(LocalDateTime value) {
+        this.updatedAt = value;
+    }
 
-    public void setStatus(boolean value) { this.status = value; }
+    public LocalDateTime getUpdatedAt() {
+        return this.updatedAt;
+    }
 
-    public boolean getStatus() { return this.status; }
+    public void setStatus(boolean value) {
+        this.status = value;
+    }
+
+    public boolean getStatus() {
+        return this.status;
+    }
+
 }

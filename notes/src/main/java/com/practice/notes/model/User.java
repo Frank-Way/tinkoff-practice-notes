@@ -19,9 +19,24 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    public  User() {}
+
+    public User(Long i, String login, String password) {
+        this.id = i;
+        this.login = login;
+        this.password = password;
+    }
+
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
     // Getters and Setters (Omitted for brevity)
 
-    public long getId() { return  this.id; }
+    public void setId(long value) { this.id = value; }
+
+    public Long getId() { return this.id; }
 
     public void setLogin(String value) { this.login = value; }
 
