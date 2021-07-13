@@ -1,6 +1,5 @@
-FROM adoptoopenjdk/openjdk11:alpine-jre
-ARG JAR_FILE=target/tinkoff-practice-notes-SNAPSHOT.jar
-WORKDIR /opt/app
-COPY ${JAR_FILE} app.jar
+FROM openjdk:11-jdk-slim
+VOLUME /tmp
 EXPOSE 8080
-CMD ["java", "-jar", "app.jar"]
+ADD build/libs/notes-0.0.1-SNAPSHOT.jar springbootpostgresqldocker.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/springbootpostgresqldocker.jar"]
