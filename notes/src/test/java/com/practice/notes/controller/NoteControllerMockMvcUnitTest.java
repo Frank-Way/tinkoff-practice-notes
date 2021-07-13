@@ -2,7 +2,7 @@ package com.practice.notes.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.practice.notes.model.Note;
-import com.practice.notes.model.User;
+//import com.practice.notes.model.User;
 import com.practice.notes.repository.NoteRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

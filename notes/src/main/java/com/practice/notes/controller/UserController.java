@@ -1,8 +1,8 @@
 package com.practice.notes.controller;
 
-import com.practice.notes.exception.ResourceNotFoundException;
-import com.practice.notes.model.User;
-import com.practice.notes.repository.UserRepository;
+import com.practice.notes.exception.*;
+import com.practice.notes.model.*;
+import com.practice.notes.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
