@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 public class NoteController {
@@ -36,12 +38,13 @@ public class NoteController {
             @ApiResponse(responseCode = "404", description = "User was not found",
                     content = @Content) })
     @GetMapping("/users/{userId}/notes")
-    public List<Note> getNotesByUserId(
-            @Parameter(description = "Id of the user whose notes are to be searched") @PathVariable Long userId) {
+    public Page<Note> getNotesByUserId(
+            @Parameter(description = "Id of the user whose notes are to be searched") @PathVariable Long userId,
+            @Parameter(description = "Settings for page") Pageable pageable) {
         if(!userRepository.existsById(userId)) {
             throw new ResourceNotFoundException("User not found with id " + userId);
         }
-        return noteRepository.findByUserId(userId);
+        return noteRepository.findPageableByUserId(userId, pageable);
     }
 
     @Operation(summary = "Get a note", description = "Get a note by user's and its ids")

@@ -1,9 +1,8 @@
 package com.practice.notes.controller;
 
 import com.practice.notes.exception.*;
-import com.practice.notes.model.*;
-import com.practice.notes.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.practice.notes.model.User;
+import com.practice.notes.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -13,10 +12,14 @@ import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 
 @RestController
+@RequestMapping("users")
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Operation(summary = "Get a user", description = "Get a user by his login")
     @ApiResponses(value = {
@@ -27,24 +30,23 @@ public class UserController {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "User was not found",
                     content = @Content) })
-
-    @GetMapping(path = "/users/", params = { "login" })
+    @GetMapping(params = { "login" })
     public User getUserByLogin(@Parameter(description = "Login of user to be searched") @RequestParam String login) {
         return userRepository.findByLogin(login).orElseThrow(
                 () -> new ResourceNotFoundException("User not found with login '" + login + "'"));
     }
 
-    @Operation(summary = "Get users", description = "Get a list of all users")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Users found",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = User.class)) }),
-            @ApiResponse(responseCode = "400", description = "Invalid request provided",
-                    content = @Content)})
-    @GetMapping("/users")
-    public List<User> getUsers() {
-        return userRepository.findAll();
-    }
+    //@Operation(summary = "Get users", description = "Get a list of all users")
+    //@ApiResponses(value = {
+    //        @ApiResponse(responseCode = "200", description = "Users found",
+    //                content = { @Content(mediaType = "application/json",
+    //                        schema = @Schema(implementation = User.class)) }),
+    //        @ApiResponse(responseCode = "400", description = "Invalid request provided",
+    //                content = @Content)})
+    //@GetMapping
+    //public List<User> getUsers() {
+    //    return userRepository.findAll();
+    //}
 
     @Operation(summary = "Get a user", description = "Get a user by his Id")
     @ApiResponses(value = {
@@ -55,7 +57,7 @@ public class UserController {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "User was not found",
                     content = @Content) })
-    @GetMapping("/users/{userId}")
+    @GetMapping("/{userId}")
     public User getUserById(@Parameter(description = "Id of user to be searched") @PathVariable Long userId) {
         return userRepository.findById(userId).orElseThrow(
                 () -> new ResourceNotFoundException("User not found with id " + userId));
@@ -68,7 +70,7 @@ public class UserController {
                             schema = @Schema(implementation = User.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid request supplied",
                     content = @Content)})
-    @PostMapping("/users")
+    @PostMapping
     public User createUser(@Valid @RequestBody User user) {
         return userRepository.save(user);
     }
@@ -82,7 +84,7 @@ public class UserController {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "User was not found",
                     content = @Content) })
-    @PutMapping("/users/{userId}")
+    @PutMapping("/{userId}")
     public User updateUser(@Parameter(description = "Id of user to be updated") @PathVariable Long userId,
                            @Valid @RequestBody User userRequest) {
         return userRepository.findById(userId)
@@ -102,7 +104,7 @@ public class UserController {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "User was not found",
                     content = @Content) })
-    @DeleteMapping("/users/{userId}")
+    @DeleteMapping("/{userId}")
     public ResponseEntity<?> deleteUser(
             @Parameter(description = "Id of user to be deleted") @PathVariable Long userId) {
         return userRepository.findById(userId)
