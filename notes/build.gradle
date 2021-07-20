@@ -34,9 +34,9 @@ test {
 }
 
 flyway {
-	url = 'jdbc:postgresql://localhost:5432/postgres'
-	user = 'root'
-	password = '6342'
+	url = "$System.env.SPRING_DATASOURCE_URL"
+	user = "$System.env.SPRING_DATASOURCE_USERNAME"
+	password = "$System.env.SPRING_DATASOURCE_PASSWORD"
 	schemas = ['public']
 }
 
