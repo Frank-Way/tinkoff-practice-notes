@@ -3,9 +3,6 @@ plugins {
 	id 'org.springframework.boot' version '2.2.1.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
-	id 'com.palantir.docker' version '0.26.0'
-	id 'com.palantir.docker-run' version '0.26.0'
-	id "com.palantir.docker-compose" version "0.26.0"
 }
 
 group = 'com.practice'
@@ -34,24 +31,8 @@ test {
 }
 
 flyway {
-	url = "jdbc:postgresql://dbpostgresql:5432/mydb"
-	user = "postgres"
-	password = "password"
+	url = "jdbc:postgresql://localhost:5432/postgres"
+	user = "root"
+	password = "6342"
 	schemas = ['public']
-}
-
-String imageName = "notes:$version"
-docker {
-	name imageName
-	files "build/libs/${bootJar.archiveFileName.get()}"
-	buildArgs([JAR_FILE: bootJar.archiveFileName.get()])
-}
-dockerRun {
-	name project.name
-	image imageName
-	ports '8080:8080'
-	clean true
-}
-dockerCompose {
-	dockerComposeFile 'docker-compose.yml'
 }
