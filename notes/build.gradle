@@ -34,15 +34,17 @@ test {
 }
 
 flyway {
-	url = "$System.env.SPRING_DATASOURCE_URL"
-	user = "$System.env.SPRING_DATASOURCE_USERNAME"
-	password = "$System.env.SPRING_DATASOURCE_PASSWORD"
+	url = "jdbc:postgresql://dbpostgresql:5432/mydb"
+	user = "postgres"
+	password = "password"
 	schemas = ['public']
 }
 
-String imageName = "${project.name}:${project.version}"
+String imageName = "notes:$version"
 docker {
 	name imageName
+	files "build/libs/${bootJar.archiveFileName.get()}"
+	buildArgs([JAR_FILE: bootJar.archiveFileName.get()])
 }
 dockerRun {
 	name project.name
