@@ -40,11 +40,9 @@ flyway {
 	schemas = ['public']
 }
 
-String imageName = "notes:$version"
+String imageName = "${project.name}:${project.version}"
 docker {
 	name imageName
-	files "build/libs/${bootJar.archiveFileName.get()}"
-	buildArgs([JAR_FILE: bootJar.archiveFileName.get()])
 }
 dockerRun {
 	name project.name
