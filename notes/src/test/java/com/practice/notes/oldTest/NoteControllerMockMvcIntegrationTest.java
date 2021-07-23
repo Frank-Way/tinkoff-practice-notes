@@ -1,4 +1,4 @@
-package com.practice.notes.controller;
+package com.practice.notes.oldTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.practice.notes.model.Note;
