@@ -1,6 +1,7 @@
-package com.practice.notes.controller;
+package com.practice.notes.oldTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.practice.notes.controller.NoteController;
 import com.practice.notes.model.Note;
 //import com.practice.notes.model.User;
 import com.practice.notes.repository.NoteRepository;

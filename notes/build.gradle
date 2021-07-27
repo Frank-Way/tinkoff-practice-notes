@@ -22,8 +22,8 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation "io.springfox:springfox-boot-starter:3.0.0"
-	testImplementation 'org.springframework.cloud:spring-cloud-starter-test'
-	testImplementation 'com.playtika.testcontainers:embedded-postgresql-test'
+	implementation 'org.projectlombok:lombok'
+	testImplementation 'org.testcontainers:postgresql:1.15.3'
 }
 
 test {

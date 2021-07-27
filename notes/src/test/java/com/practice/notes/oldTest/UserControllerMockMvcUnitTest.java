@@ -1,8 +1,9 @@
-package com.practice.notes.controller;
+package com.practice.notes.oldTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.practice.notes.exception.*;
-import com.practice.notes.model.*;
+import com.practice.notes.exception.ResourceNotFoundException;
+import com.practice.notes.model.User;
+import com.practice.notes.controller.UserController;
 import com.practice.notes.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
