@@ -1,0 +1,12 @@
+service/JsonBodyHandler.java
+ service.JsonBodyHandler
+model/ServiceUser.java
+ model.ServiceUser
+model/Note.java
+ model.Note
+telegram/Bot.java
+ telegram.Bot
+service/ApiService.java
+ service.ApiService
+TinkoffPracticeTGbotApplication.java
+ TinkoffPracticeTGbotApplication
