@@ -1,7 +1,9 @@
 package service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import exception.ResourceNotFoundException;
 import model.ServiceUser;
 import model.Note;
 import java.io.IOException;
@@ -11,49 +13,56 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.apache.http.HttpStatus;
 
 
 public class ApiService {
     private static final String baseURL = "http://localhost:8080/users";
     private static final HttpClient client = HttpClient.newHttpClient();
 
-    public static ServiceUser getUserById(Long id) throws IOException, InterruptedException {
-        String url = baseURL + "/" + id.toString();
-        HttpRequest request = HttpRequest.newBuilder(
-                URI.create(url))
-                .header("accept", "application/json")
-                .GET()
-                .build();
-        var response = client.send(request, new JsonBodyHandler<>(ServiceUser.class));
-        return response.body().get();
-    }
-
-    public static ServiceUser getUserByLogin(String login) throws IOException, InterruptedException {
+    public static ServiceUser getUserByLogin(String login) {
         String url = baseURL + "?login=" + login;
         HttpRequest request = HttpRequest.newBuilder(
                 URI.create(url))
                 .header("accept", "application/json")
                 .GET()
                 .build();
-        var response = client.send(request, new JsonBodyHandler<>(ServiceUser.class));
-        return response.body().get();
+        HttpResponse<Supplier<ServiceUser>> response = null;
+        try {
+            response = client.send(request, new JsonBodyHandler<>(ServiceUser.class));
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (response.statusCode() == HttpStatus.SC_OK)
+            return response.body().get();
+        else
+            throw new ResourceNotFoundException();
     }
 
-    public static void createUser(ServiceUser user) throws IOException, InterruptedException {
+    public static void createUser(ServiceUser user) {
         String url = baseURL + "/";
-        HttpRequest request = HttpRequest.newBuilder(
-                URI.create(url))
-                .header("accept", "application/json")
-                .header("content-type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(new ObjectMapper().writeValueAsString(user)))
-                .build();
-        var response = client.send(request, new JsonBodyHandler<>(ServiceUser.class));
+        HttpRequest request = null;
+        try {
+            request = HttpRequest.newBuilder(
+                    URI.create(url))
+                    .header("accept", "application/json")
+                    .header("content-type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(new ObjectMapper().writeValueAsString(user)))
+                    .build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        try {
+            client.send(request, new JsonBodyHandler<>(ServiceUser.class));
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static List<Note> getNotesByUserId(Long user_id, Long pageNumber, Long pageSize) throws IOException, InterruptedException {
+    public static List<Note> getNotesByUserId(Long user_id, Long pageNumber, Long pageSize) {
         String url = baseURL + "/" + user_id.toString() + "/notes?page=" + pageNumber.toString() +
                                "&size=" + pageSize.toString() + "&sort=updatedAt,desc";
         HttpRequest request = HttpRequest.newBuilder(
@@ -61,56 +70,107 @@ public class ApiService {
                 .header("accept", "application/json")
                 .GET()
                 .build();
-        var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(response.body().toString());
+        JsonNode jsonNode = null;
+        try {
+            jsonNode = objectMapper.readTree(response.body());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         String json = jsonNode.findValue("content").toString();
-        Note[] na = objectMapper.readValue(json, Note[].class);
-        List<Note> ln = Arrays.asList(objectMapper.readValue(json, Note[].class));
+        List<Note> ln = null;
+        try {
+            ln = Arrays.asList(objectMapper.readValue(json, Note[].class));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         return ln;
     }
 
-    public static Note getNoteById(Long user_id, Long id) throws IOException, InterruptedException {
+    public static Note getNoteById(Long user_id, Long id) {
         String url = baseURL + "/" + user_id.toString() + "/notes/" + id.toString();
         HttpRequest request = HttpRequest.newBuilder(
                 URI.create(url))
                 .header("accept", "application/json")
                 .GET()
                 .build();
-        var response = client.send(request, new JsonBodyHandler<>(Note.class));
-        return response.body().get();
+        HttpResponse<Supplier<Note>> response = null;
+        try {
+            response = client.send(request, new JsonBodyHandler<>(Note.class));
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (response.statusCode() == HttpStatus.SC_OK)
+            return response.body().get();
+        else
+            throw new ResourceNotFoundException();
     }
 
-    public static void createNote(Long user_id, Note note) throws IOException, InterruptedException {
+    public static void createNote(Long user_id, Note note) {
         String url = baseURL + "/" + user_id.toString() + "/notes";
-        HttpRequest request = HttpRequest.newBuilder(
-                URI.create(url))
-                .header("accept", "application/json")
-                .header("content-type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(new ObjectMapper().writeValueAsString(note)))
-                .build();
-        var response = client.send(request, new JsonBodyHandler<>(Note.class));
+        HttpRequest request = null;
+        try {
+            request = HttpRequest.newBuilder(
+                    URI.create(url))
+                    .header("accept", "application/json")
+                    .header("content-type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(new ObjectMapper().writeValueAsString(note)))
+                    .build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        try {
+            client.send(request, new JsonBodyHandler<>(Note.class));
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static Note updateNote(Long user_id, Note note) throws IOException, InterruptedException {
+    public static Note updateNote(Long user_id, Note note){
         String url = baseURL + "/" + user_id.toString() + "/notes/" + note.getId().toString();
-        HttpRequest request = HttpRequest.newBuilder(
-                URI.create(url))
-                .header("accept", "application/json")
-                .header("content-type", "application/json")
-                .PUT(HttpRequest.BodyPublishers.ofString(new ObjectMapper().writeValueAsString(note)))
-                .build();
-        var response = client.send(request, new JsonBodyHandler<>(Note.class));
-        return response.body().get();
+        HttpRequest request = null;
+        try {
+            request = HttpRequest.newBuilder(
+                    URI.create(url))
+                    .header("accept", "application/json")
+                    .header("content-type", "application/json")
+                    .PUT(HttpRequest.BodyPublishers.ofString(new ObjectMapper().writeValueAsString(note)))
+                    .build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        HttpResponse<Supplier<Note>> response = null;
+        try {
+            response = client.send(request, new JsonBodyHandler<>(Note.class));
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (response.statusCode() == HttpStatus.SC_OK)
+            return response.body().get();
+        else
+            throw new ResourceNotFoundException();
     }
 
-    public static void deleteNote(Long user_id, Long id) throws IOException, InterruptedException {
+    public static void deleteNote(Long user_id, Long id) {
         String url = baseURL + "/" + user_id.toString() + "/notes/" + id.toString();
         HttpRequest request = HttpRequest.newBuilder(
                 URI.create(url))
                 .header("accept", "application/json")
                 .DELETE()
                 .build();
-        var response = client.send(request, new JsonBodyHandler<>(Note.class));
+        HttpResponse<Supplier<Note>> response = null;
+        try {
+            response = client.send(request, new JsonBodyHandler<>(Note.class));
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (response.statusCode() != HttpStatus.SC_OK)
+            throw new ResourceNotFoundException();
     }
 }

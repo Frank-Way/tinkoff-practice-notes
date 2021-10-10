@@ -58,7 +58,7 @@ public class Note {
 
     public String getName() {
         if (this.name != null) return this.name;
-        else return "Без названия";
+        else return "Без заголовка";
     }
 
     public void setBody(String value) {

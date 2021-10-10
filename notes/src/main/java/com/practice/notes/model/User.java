@@ -2,9 +2,7 @@ package com.practice.notes.model;
 
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Builder;
 
-@Builder
 @Entity
 @Table(name = "users")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -33,7 +31,6 @@ public class User {
         this.login = login;
         this.password = password;
     }
-
 
     // Getters and Setters (Omitted for brevity)
 

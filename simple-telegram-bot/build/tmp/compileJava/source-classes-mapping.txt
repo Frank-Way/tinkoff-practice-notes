@@ -2,11 +2,53 @@ service/JsonBodyHandler.java
  service.JsonBodyHandler
 model/ServiceUser.java
  model.ServiceUser
-model/Note.java
- model.Note
+telegram/service/SendBotMessageServiceImpl.java
+ telegram.service.SendBotMessageServiceImpl
 telegram/Bot.java
  telegram.Bot
-service/ApiService.java
- service.ApiService
+telegram/command/Patterns.java
+ telegram.command.Patterns
+model/Note.java
+ model.Note
+telegram/command/CommandName.java
+ telegram.command.CommandName
+telegram/service/SendBotMessageService.java
+ telegram.service.SendBotMessageService
+telegram/command/Command.java
+ telegram.command.Command
 TinkoffPracticeTGbotApplication.java
  TinkoffPracticeTGbotApplication
+telegram/command/UnknownCommand.java
+ telegram.command.UnknownCommand
+exception/ResourceNotFoundException.java
+ exception.ResourceNotFoundException
+service/ApiService.java
+ service.ApiService
+telegram/command/CommandContainer.java
+ telegram.command.CommandContainer
+telegram/command/StartCommand.java
+ telegram.command.StartCommand
+telegram/command/UpdateCommand.java
+ telegram.command.UpdateCommand
+telegram/command/DeleteCommand.java
+ telegram.command.DeleteCommand
+telegram/command/ReadCommand.java
+ telegram.command.ReadCommand
+telegram/command/SignInCommand.java
+ telegram.command.SignInCommand
+telegram/command/NoCommand.java
+ telegram.command.NoCommand
+telegram/command/SettingsCommand.java
+ telegram.command.SettingsCommand
+telegram/command/SignUpCommand.java
+ telegram.command.SignUpCommand
+telegram/command/Messages.java
+ telegram.command.Messages
+telegram/command/AllCommand.java
+ telegram.command.AllCommand
+telegram/command/SignOutCommand.java
+ telegram.command.SignOutCommand
+telegram/command/HelpCommand.java
+ telegram.command.HelpCommand
+telegram/command/CreateCommand.java
+ telegram.command.CreateCommand
